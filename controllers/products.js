@@ -22,15 +22,15 @@ exports.postAddProduct = (req, res, next) => {
 exports.getProducts = (req, res, next) => {
 	//console.log('shop.js', adminData.products);
 	//res.sendFile(path.join(rootDir, 'views', 'shop.html'));
-	const products = Product.fetchAll();
-
-	res.render('shop', {
-		prods: products,
-		docTitle: 'Shop - Test MVC',
-		productCss: true,
-		activeshop: true,
-		activeadmin: false,
-		hasProducts: products.length > 0,
-		path: '/',
+	Product.fetchAll(products => {
+		res.render('shop', {
+			prods: products,
+			docTitle: 'Shop - Test MVC',
+			productCss: true,
+			activeshop: true,
+			activeadmin: false,
+			hasProducts: products.length > 0,
+			path: '/',
+		});
 	});
 };
