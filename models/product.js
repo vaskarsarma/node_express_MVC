@@ -1,8 +1,16 @@
-//const products = [];
 const fs = require('fs');
 const path = require('path');
 const rootDir = require('../utils/path');
 const p = path.join(rootDir, 'data', 'Product.json');
+
+const getProductFromFile = cb => {
+	fs.readFile(p, (err, data) => {
+		if (err) {
+			return cb([]);
+		}
+		cb(JSON.parse(data));
+	});
+};
 
 module.exports = class Product {
 	constructor(t) {
@@ -10,12 +18,7 @@ module.exports = class Product {
 	}
 
 	save() {
-		//products.push(this);
-		let products = [];
-		fs.readFile(p, (err, data) => {
-			if (!err) {
-				products = JSON.parse(data);
-			}
+		getProductFromFile(products => {
 			products.push(this);
 			console.log(JSON.stringify(products));
 			fs.writeFile(p, JSON.stringify(products), err => {
@@ -26,12 +29,7 @@ module.exports = class Product {
 
 	static fetchAll(cb) {
 		if (fs.existsSync(p)) {
-			fs.readFile(p, (err, data) => {
-				if (err) {
-					cb([]);
-				}
-				cb(JSON.parse(data));
-			});
+			getProductFromFile(cb);
 		} else {
 			cb([]);
 		}
