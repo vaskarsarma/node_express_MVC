@@ -5,7 +5,7 @@ const express = require('express');
 //const rootDir = require('../utils/path');
 //const adminData = require('./admin');
 
-const productController = require('../controllers/product');
+const productController = require('../controllers/products');
 
 const router = express.Router();
 
